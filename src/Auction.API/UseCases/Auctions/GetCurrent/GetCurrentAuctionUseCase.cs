@@ -1,17 +1,16 @@
-﻿using Auction.API.Entities;
+﻿using Auctions.API.Contracts;
+using Auctions.API.Entities;
 
-namespace Auction.API.UseCases.Auctions.GetCurrent
+namespace Auctions.API.UseCases.Auctions.GetCurrent
 {
     public class GetCurrentAuctionUseCase
     {
-        public AuctionEntity Execute() {
-            return new AuctionEntity
-            {
-                Id = 1,
-                Name = "Test",
-                Starts = DateTime.Now,
-                Ends = DateTime.Now,
-            };
+        private readonly IAuctionRepository _repository;
+
+        public GetCurrentAuctionUseCase(IAuctionRepository repository) => _repository = repository;
+        public Auction? Execute()
+        {
+            return _repository.GetCurrent();
         }
     }
 }

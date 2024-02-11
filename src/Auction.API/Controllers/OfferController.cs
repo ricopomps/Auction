@@ -1,9 +1,9 @@
-﻿using Auction.API.Dtos.Requests;
-using Auction.API.Filters;
-using Auction.API.UseCases.Offers.CreateOffer;
+﻿using Auctions.API.Dtos.Requests;
+using Auctions.API.Filters;
+using Auctions.API.UseCases.Offers.CreateOffer;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Auction.API.Controllers
+namespace Auctions.API.Controllers
 {
     [ServiceFilter(typeof(AuthenticationUserAttribute))]
     public class OfferController : AuctionBaseController

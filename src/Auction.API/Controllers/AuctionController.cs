@@ -1,20 +1,20 @@
-﻿using Auction.API.Entities;
-using Auction.API.UseCases.Auctions.GetCurrent;
+﻿using Auctions.API.Entities;
+using Auctions.API.UseCases.Auctions.GetCurrent;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Auction.API.Controllers
+namespace Auctions.API.Controllers
 {
     public class AuctionController : AuctionBaseController
     {
         [HttpGet]
-        [ProducesResponseType(typeof(AuctionEntity),StatusCodes.Status200OK )]
-        [ProducesResponseType(StatusCodes.Status204NoContent )]
-        public IActionResult GetCurrentAuction()
+        [ProducesResponseType(typeof(Auction), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult GetCurrentAuction([FromServices] GetCurrentAuctionUseCase useCase)
         {
-            var useCase = new GetCurrentAuctionUseCase();
             var result = useCase.Execute();
 
-            if (result is null) {
+            if (result is null)
+            {
                 return NoContent();
             }
 

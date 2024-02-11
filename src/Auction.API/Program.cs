@@ -1,6 +1,11 @@
-using Auction.API.Filters;
-using Auction.API.Services;
-using Auction.API.UseCases.Offers.CreateOffer;
+using Auctions.API.Contracts;
+using Auctions.API.Filters;
+using Auctions.API.Repositories;
+using Auctions.API.Repositories.DataAccess;
+using Auctions.API.Services;
+using Auctions.API.UseCases.Auctions.GetCurrent;
+using Auctions.API.UseCases.Offers.CreateOffer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +22,7 @@ builder.Services.AddSwaggerGen(options =>
         Description = @"JWT Authorization header using the Bearer scheme.
                         Enter 'Bearer' [space] and then your token in the text input below.
                         Example: 'Bearer 12345abcdeg'",
-        Name= "Authorization",
+        Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
@@ -45,6 +50,17 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddScoped<AuthenticationUserAttribute>();
 builder.Services.AddScoped<LoggedUser>();
 builder.Services.AddScoped<CreateOfferUseCase>();
+builder.Services.AddScoped<GetCurrentAuctionUseCase>();
+
+builder.Services.AddScoped<IAuctionRepository, AuctionRepository>();
+builder.Services.AddScoped<IOfferRepository, OfferRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ILoggedUser, LoggedUser>();
+
+builder.Services.AddDbContext<AuctionDbContext>(options =>
+{
+    options.UseSqlite("Data Source=C:\\Users\\ricar\\Downloads\\leilaoDbNLW.db");
+});
 
 builder.Services.AddHttpContextAccessor();
 

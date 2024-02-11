@@ -1,19 +1,24 @@
-﻿using Auction.API.Dtos.Requests;
-using Auction.API.Entities;
-using Auction.API.Repositories;
-using Auction.API.Services;
+﻿using Auctions.API.Contracts;
+using Auctions.API.Dtos.Requests;
+using Auctions.API.Entities;
+using Auctions.API.Repositories;
+using Auctions.API.Repositories.DataAccess;
+using Auctions.API.Services;
 
-namespace Auction.API.UseCases.Offers.CreateOffer
+namespace Auctions.API.UseCases.Offers.CreateOffer
 {
     public class CreateOfferUseCase
     {
-        private readonly LoggedUser _loggedUser;
-        public CreateOfferUseCase(LoggedUser loggedUser) => _loggedUser = loggedUser;
+        private readonly ILoggedUser _loggedUser;
+        private readonly IOfferRepository _offerRepository;
+        public CreateOfferUseCase(ILoggedUser loggedUser, IOfferRepository offerRepository)
+        {
+            _loggedUser = loggedUser;
+            _offerRepository = offerRepository;
+        }
 
         public int Execute(int itemId, RequestCreateOfferDto request)
         {
-            var repository = new AuctionDbContext();
-
             var user = _loggedUser.User();
 
             var offer = new Offer
@@ -24,8 +29,7 @@ namespace Auction.API.UseCases.Offers.CreateOffer
                 UserId = user.Id
             };
 
-            repository.Offers.Add(offer);
-            repository.SaveChanges();
+            _offerRepository.Add(offer);
 
             return offer.Id;
         }

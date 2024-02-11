@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using Auction.API.Enums;
+using Auctions.API.Enums;
 
-namespace Auction.API.Entities
+namespace Auctions.API.Entities
 {
     [Table("Items")]
     public class Item

@@ -1,4 +1,4 @@
-﻿namespace Auction.API.Entities
+﻿namespace Auctions.API.Entities
 {
     public class User
     {

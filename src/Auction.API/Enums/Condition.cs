@@ -1,4 +1,4 @@
-﻿namespace Auction.API.Enums
+﻿namespace Auctions.API.Enums
 {
     public enum Condition
     {

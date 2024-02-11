@@ -1,6 +1,6 @@
-﻿namespace Auction.API.Entities
+﻿namespace Auctions.API.Entities
 {
-    public class AuctionEntity
+    public class Auction
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

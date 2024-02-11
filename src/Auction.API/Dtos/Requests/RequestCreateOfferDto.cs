@@ -1,4 +1,4 @@
-﻿namespace Auction.API.Dtos.Requests
+﻿namespace Auctions.API.Dtos.Requests
 {
     public class RequestCreateOfferDto
     {

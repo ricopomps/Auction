@@ -1,25 +1,26 @@
-﻿using System.Buffers.Text;
-using System.Text;
-using Auction.API.Entities;
-using Auction.API.Repositories;
+﻿using System.Text;
+using Auctions.API.Contracts;
+using Auctions.API.Entities;
 
-namespace Auction.API.Services
+namespace Auctions.API.Services
 {
-    public class LoggedUser
+    public class LoggedUser : ILoggedUser
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public LoggedUser(IHttpContextAccessor httpContext) {
+        private readonly IUserRepository _userRepository;
+        public LoggedUser(IHttpContextAccessor httpContext, IUserRepository userRepository)
+        {
             _httpContextAccessor = httpContext;
+            _userRepository = userRepository;
         }
 
-        public User User() {
-            var repository = new AuctionDbContext();
-
+        public User User()
+        {
             var token = TokenOnRequest();
 
             var email = FromBase64String(token);
 
-            return repository.Users.First(User => User.Email.Equals(email));
+            return _userRepository.GetUserByEmail(email);
         }
 
         private string TokenOnRequest()
